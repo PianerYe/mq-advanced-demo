@@ -60,4 +60,17 @@ public class SpringAmqpTest {
         //发送消息
         rabbitTemplate.convertAndSend("simple.queue",message);
     }
+
+    @Test
+    public void testTTLMessage(){
+        //准备消息
+        Message message = MessageBuilder.withBody("hello,ttl message".getBytes(StandardCharsets.UTF_8))
+                .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
+                .setExpiration("5000")
+                .build();
+        //发送消息
+        rabbitTemplate.convertAndSend("ttl.direct","ttl",message);
+        //记录日志
+        log.info("消息已经成功发送了！");
+    }
 }
