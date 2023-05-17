@@ -26,4 +26,13 @@ public class SpringRabbitListener {
     public void listenDlQueue(String msg){
         log.info("消费者接收到了dl.queue的延迟消息");
     }
+
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = "delay.queue",durable = "true"),
+            exchange = @Exchange(name = "delay.direct",delayed = "true"),
+            key = "delay"
+    ))
+    public void listenDelayExchange(String msg){
+        log.info("消费者接收到了delay.queue的延迟消息");
+    }
 }
