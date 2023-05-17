@@ -88,4 +88,31 @@ public class SpringAmqpTest {
         log.info("消息已经成功发送了！");
     }
 
+    @Test
+    public void testLazyQueue() throws InterruptedException {
+        for (int i = 0; i < 1000000 ; i++) {
+            //1.准备消息
+            Message message = MessageBuilder.withBody("hello,spring!".getBytes(StandardCharsets.UTF_8))
+                    .setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT)
+                    .build();
+            //3.发送消息
+            rabbitTemplate.convertAndSend("lazy.queue", message);
+        }
+
+    }
+
+    @Test
+    public void testNormalQueue() throws InterruptedException {
+        for (int i = 0; i < 1000000 ; i++) {
+            //1.准备消息
+            Message message = MessageBuilder.withBody("hello,spring!".getBytes(StandardCharsets.UTF_8))
+                    .setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT)
+                    .build();
+            //3.发送消息
+            rabbitTemplate.convertAndSend("normal.queue", message);
+        }
+
+    }
+
+
 }
