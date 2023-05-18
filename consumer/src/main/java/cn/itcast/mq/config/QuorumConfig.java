@@ -5,19 +5,13 @@ import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
-public class LazyConfig {
+@Configuration
+public class QuorumConfig {
 
     @Bean
-    public Queue lazyQueue(){
-        return QueueBuilder.durable("lazy.queue")
-                .lazy()
+    public Queue quorumQueue(){
+        return QueueBuilder.durable("quorum.queue2")
+                .quorum()
                 .build();
     }
-    @Bean
-    public Queue normalQueue(){
-        return QueueBuilder.durable("normal.queue")
-                .build();
-    }
-
 }
